@@ -1,7 +1,7 @@
 # CSE330
 Laney Ching: 463883
 Ethan Sauerberg: 466408
-Approved by Clay Mudter 11/22/2020
+Approved by Clay Mudter 11/22/2020 @4:15 pm
 
 Rubric
 General (5 points)
@@ -24,8 +24,11 @@ Creative Portion (20 points)
   
 
 
-
+Questions: 
+- Ya like jazz?
+- 
 
 music sharing website - pick from 2 songs/artists/genres/etc, makes a profile and matches you with other users, creates a spotify playlist for your date, in browser music playing, text music recs easy 
 
-genres - 
+genres - Pop, Country, Hip Hop, Electronic/Dance, Jazz, R&B/soul, Rock
+Fame-o-meter
