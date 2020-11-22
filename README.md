@@ -1,11 +1,12 @@
 # CSE330
 Laney Ching: 463883
 Ethan Sauerberg: 466408
+Approved by Clay Mudter 11/22/2020
 
 Rubric
 General (5 points)
   5 - Turning in rubric on time
-Langugaes/Framework (25 points) 
+Languages/Framework (25 points) 
   10 - Learning and use of Express
   10 - Learning and use of MongoDB
   5 - Use of Spotify API
@@ -26,3 +27,5 @@ Creative Portion (20 points)
 
 
 music sharing website - pick from 2 songs/artists/genres/etc, makes a profile and matches you with other users, creates a spotify playlist for your date, in browser music playing, text music recs easy 
+
+genres - 
