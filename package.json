@@ -1,0 +1,21 @@
+{
+  "name": "module7group",
+  "version": "1.0.0",
+  "description": "Laney Ching: 463883\r Ethan Sauerberg: 466408\r Approved by Clay Mudter 11/22/2020 @4:15 pm",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node site-server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cse330-fall-2020/creativeproject-module7-463883-466408.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cse330-fall-2020/creativeproject-module7-463883-466408/issues"
+  },
+  "homepage": "https://github.com/cse330-fall-2020/creativeproject-module7-463883-466408#readme"
+}
