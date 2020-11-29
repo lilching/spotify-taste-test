@@ -1,5 +1,9 @@
 import Express from "express"
 
+const {MongoClient} = require('mongodb');
+const uri = "mongodb+srv://mod7root:mod7pass@mod7cluster.ygyyw.mongodb.net/mod7database?retryWrites=true&w=majority"
+const client = new MongoClient(uri);
+
 const app = Express();
 const port = 3456;
 
@@ -21,3 +25,4 @@ const MongoClient = require('mongodb').MongoClient;
 MongoClient.connect(uri, function(err,db){
 
 })
+
