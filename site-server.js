@@ -8,6 +8,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var path = require('path');
 var passwordHash = require('password-hash');
+var http = require("http");
 
 
 const app = express();
@@ -33,6 +34,7 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
 // })
 
 app.use(express.static('public_node'))
+app.use(express.static('web-api-auth-examples'))
 
 app.get('/', (request, response)=> {
     // response.send(path.join(import.meta.url + '/home.html'));
