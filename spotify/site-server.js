@@ -34,7 +34,7 @@ const client = new MongoClient(uri, { useUnifiedTopology: true });
 // })
 
 app.use(express.static('public_node'))
-app.use(express.static('web-api-auth-examples'))
+// app.use(express.static('spotify'))
 
 app.get('/', (request, response)=> {
     // response.send(path.join(import.meta.url + '/home.html'));

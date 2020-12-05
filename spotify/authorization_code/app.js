@@ -144,6 +144,7 @@ app.get('/callback', function(req, res) {
           json: true
           // json: {limit:10, time_range: "short_term"}
         } 
+
         request.get(options_top, function(error, response, body) {
           console.log("top songs and artists log")
           console.log(body)

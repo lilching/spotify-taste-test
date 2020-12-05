@@ -30,5 +30,5 @@ Questions:
 
 music sharing website - pick from 2 songs/artists/genres/etc, makes a profile and matches you with other users, creates a spotify playlist for your date, in browser music playing, text music recs easy 
 
-genres - Pop, Country, Hip Hop, Electronic/Dance, Jazz, R&B/soul, Rock, Classical
+genres - Pop, Country, Hip-Hop, Electronic/Dance, Jazz, R&B/Soul, Rock, Classical
 Fame-o-meter
