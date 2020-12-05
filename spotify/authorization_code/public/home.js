@@ -1,3 +1,16 @@
+for(let i = 0; i < questions.length; ++i) {
+    survey_div = $("#survey-div")
+    let to_append;
+    if(questions[i].answers == 2) {
+        to_append = $("<div class='question-outer-div><h3 class='question-h3'>" + questions[i].q + "</h3><div class='answers-div'><h5 class='option-h5'>" + questions[i].a1.name + "</h5><img alt='" + questions[i].a1.name + "' src='" + questions[i].a1.image + "'><h5 class='option-h5'>" + questions[i].a2.name + "</h5><img alt='" + questions[i].a2.name + "' src='" + questions[i].a2.image + "'></div></div>")
+
+    }
+    else if(questions[i].answers == 4) {
+        to_append = $("<div class='question-outer-div><h3 class='question-h3'>" + questions[i].q + "</h3><div class='answers-div'><h5 class='option-h5'>" + questions[i].a1.name + "</h5><img alt='" + questions[i].a1.name + "' src='" + questions[i].a1.image + "'><h5 class='option-h5'>" + questions[i].a2.name + "</h5><img alt='" + questions[i].a2.name + "' src='" + questions[i].a2.image + "'><h5 class='option-h5'>" + questions[i].a3.name + "</h5><img alt='" + questions[i].a3.name + "' src='" + questions[i].a3.image + "'><h5 class='option-h5'>" + questions[i].a4.name + "</h5><img alt='" + questions[i].a4.name + "' src='" + questions[i].a4.image + "'></div></div>")
+    }
+    survey_div.append(to_append)
+}
+
 let questions = [
     {
         q: "Bach or Drake?",
