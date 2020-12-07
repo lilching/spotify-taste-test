@@ -1,3 +1,4 @@
+
 let questions = [
     {
         q: "Bach or Drake?",
@@ -278,9 +279,30 @@ let questions = [
         ]
     }
 ]    
+let answers = []
+let username = ""
+
+fetch("/get-username", {
+    method: "GET"
+})
+.then(function(response) {
+    return response.json()
+})
+.then(function(data) {
+    if(data.success) {
+        username = data.username;
+    }
+    else {
+        alert("You are not logged in... Redirecting")
+        window.location.href = data.link
+    }
+    console.log(data)
+})
+.catch(function(error) {
+    console.error('Error', error)
+})
 
 
-answers = []
 // $("body").append($("<button id='match-me-button'>Match Me!</button>"))
 for(let i = 0; i < questions.length; ++i) {
     survey_div = $("#survey-div")
@@ -305,7 +327,7 @@ for(let i = 0; i < questions.length; ++i) {
     to_append.append(question_wrapper)
     // if(questions[i].answers == 2) {
     //     to_append = $("<div class='question-outer-div><h3 class='question-h3'>" + questions[i].q + "</h3><div class='answers-div'><h5 class='option-h5'>" + questions[i].a1.name + "</h5><img alt='" + questions[i].a1.name + "' src='" + questions[i].a1.image + "'><h5 class='option-h5'>" + questions[i].a2.name + "</h5><img alt='" + questions[i].a2.name + "' src='" + questions[i].a2.image + "'></div></div>")
-
+    
     // }
     // else if(questions[i].answers == 4) {
     //     to_append = $("<div class='question-outer-div><h3 class='question-h3'>" + questions[i].q + "</h3><div class='answers-div'><h5 class='option-h5'>" + questions[i].a1.name + "</h5><img alt='" + questions[i].a1.name + "' src='" + questions[i].a1.image + "'><h5 class='option-h5'>" + questions[i].a2.name + "</h5><img alt='" + questions[i].a2.name + "' src='" + questions[i].a2.image + "'><h5 class='option-h5'>" + questions[i].a3.name + "</h5><img alt='" + questions[i].a3.name + "' src='" + questions[i].a3.image + "'><h5 class='option-h5'>" + questions[i].a4.name + "</h5><img alt='" + questions[i].a4.name + "' src='" + questions[i].a4.image + "'></div></div>")
@@ -325,14 +347,14 @@ $("#match-me-button").click((event)=>{
         "jazz": 0,
         "randb": 0
     }
-
+    
     for(let i = 0; i < answers.length; ++i) {
         scoresDict[questions[i].answers[answers[i]].genre] += 1;
     }
     console.log(scoresDict)
     
     data = {
-        username: "",
+        username: username,
         scoresDict: scoresDict
     }
     fetch("/log-survey", {
@@ -341,23 +363,14 @@ $("#match-me-button").click((event)=>{
         headers: {
             'Content-Type': 'application/json',
         }
-    }).then(function(response) {
+    })
+    .then(function(response) {
         return response.json();    
     })
     .then(function(data) {
-        if(data.success) {
-            window.location.href = data.link;
-        }
-        else {
-            alert(data.message)
-        }
         console.log(data)
     })
     .catch(function(error) {
         console.error('Error', error)
     })  
 })
-
-//when a thing is clicked, then change answers[i] --> #
-//for all answers to that question, remove class "selected", add class "selected" for answer clicked
-

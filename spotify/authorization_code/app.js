@@ -51,6 +51,17 @@ var client_id = '179d99dacbac467497c807bbabe53630'; // Your client id
 var client_secret = '02f0f9b272074c48b65b523dd5d8d0bc'; // Your secret
 var redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
 
+
+async function init() {
+  
+  try {
+    await client.connect();
+  } catch (e) {
+    console.error(e);
+  } finally {
+    // await client.close();
+  }
+}
 /**
 * Generates a random string containing numbers and letters
 * @param  {number} length The length of the string
@@ -127,28 +138,29 @@ app.get('/callback', function(req, res) {
         var access_token = body.access_token,
         refresh_token = body.refresh_token;
         
-        var options = {
-          url: 'https://api.spotify.com/v1/me',
-          headers: { 'Authorization': 'Bearer ' + access_token },
-          json: true
-        };
-        // use the access token to access the Spotify Web API
-        request.get(options, function(error, response, body) {
-          console.log(body);
-          console.log(body.display_name)
-        });
+        // var options = {
+        //   url: 'https://api.spotify.com/v1/me',
+        //   headers: { 'Authorization': 'Bearer ' + access_token },
+        //   json: true
+        // };
+        // // use the access token to access the Spotify Web API
+        // request.get(options, function(error, response, body) {
+        //   // console.log(body);
+        //   // console.log(body.display_name)
+        // });
         
         var options_top = {
-          url: 'https://api.spotify.com/v1/me/top/artists', //?time_range=short_term&limit=10&offset=0
-          headers: {'Authorization': 'Bearer ' + access_token }, //'Accept': 'application/json', 'Content-Type': 'application/json',
-          json: true
-          // json: {limit:10, time_range: "short_term"}
+          url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=10&offset=0', //?time_range=short_term&limit=10&offset=0
+          headers: {'Authorization': 'Bearer ' + access_token,  }, //'Accept': 'application/json', 'Content-Type': 'application/json',
+          json: true,
+          // body: {limit:10, time_range: "short_term"}
         } 
 
         request.get(options_top, function(error, response, body) {
-          console.log("top songs and artists log")
-          console.log(body)
-          //console.log(response)
+          // console.log("top songs and artists log")
+          // console.log(body)
+          // console.log(body.items[5].genres)
+
         })
         
         // we can also pass the token to the browser to make requests from there
@@ -192,13 +204,6 @@ app.get('/refresh_token', function(req, res) {
   });
 });
 
-// console.log('Listening on 8888');
-// app.listen(port);
-
-
-
-
-
 
 
 
@@ -210,21 +215,10 @@ app.listen(port, ()=>{
   console.log("listening on port " + port )
 })
 
-async function init() {
-  
-  try {
-    await client.connect();
-  } catch (e) {
-    console.error(e);
-  } finally {
-    // await client.close();
-  }
-}
-
-async function registerUser(client, userData){
+async function registerUser(userData){
   var res2 = await client.db("mod7database").collection("users").findOne({username: userData.username})
-  console.log("checking if username exists:")
-  console.log(res2)
+  // console.log("checking if username exists:")
+  // console.log(res2)
   if(res2) {
     console.log("A user already exists with that username")
     return false;
@@ -239,18 +233,15 @@ async function registerUser(client, userData){
     return true;
   }
 }
-async function loginUser(client, userData){
-  await client.connect();
+async function loginUser(userData){
+  // await client.connect();
   const res2 = await client.db("mod7database").collection("users").findOne({username: userData.username})
-  console.log("checking if username exists:")
-  console.log(res2)
+  // console.log("checking if username exists:")
+  // console.log(res2)
   if(res2.username == userData.username) {
     if(passwordHash.verify(userData.password, res2.hashedPassword)) {
-      console.log("here where we log the mofo in")
+      //console.log("here where we log the mofo in")
       return true;
-    }
-    else {
-      return false;
     }
   }
   else {
@@ -259,7 +250,7 @@ async function loginUser(client, userData){
 }
 app.post("/register-user", (req, res)=> {
   let userData = {username: req.body.username, password: req.body.password}
-  registerUser(client, userData).then((value)=> {
+  registerUser(userData).then((value)=> {
     if(value) {
       username = req.body.username
       console.log("Registered user " + username)
@@ -267,13 +258,13 @@ app.post("/register-user", (req, res)=> {
     }
     else {
       console.log("User attempted to register with a username that already existed")
-      res.json({sucess: false, message: "A user with that username already exists"})
+      res.json({success: false, message: "A user with that username already exists"})
     }
   }) 
 })
 app.post("/login-user", (req, res)=> {
   let userData = {username: req.body.username, password: req.body.password}
-  loginUser(client, userData).then((value)=> {
+  loginUser(userData).then((value)=> {
     if(value) {
       username = req.body.username
       console.log("Logged in user " + username)
@@ -285,6 +276,41 @@ app.post("/login-user", (req, res)=> {
     }
   }) 
 })
-
+app.get("/get-username", (req, res)=> {
+  if(username) {
+    res.json({success: true, username: username})
+  }
+  else {
+    res.json({success: false, link: "http://localhost:8888/login.html"})
+  }
+})
+app.post("/log-survey", (req, res)=> {
+  console.log(req.body)
+  logSurvey(req.body).then((value)=> {
+    if(value) {
+      console.log("sucessfully inserted survey data for user " + username)
+      res.json({success: true, message: "Successfully inserted survey data", link: "http://localhost:8888/"})
+    }
+    else {
+      console.log("failed to insert survey data for user " + username) 
+      res.json({success: false, message: "Failed to insert survey data"})
+    }
+  })
+})
+async function logSurvey(data) {
+  const updateResult = await client.db("mod7database").collection("users").updateOne(
+    { username: data.username }, 
+    { 
+      $set: {surveyDict: data.scoresDict}
+    }
+  ) 
+  // console.log(updateResult)
+  if(updateResult.result.nModified > 0) {
+    return true;
+  }
+  else {
+    return false
+  }
+}
 
 init();
