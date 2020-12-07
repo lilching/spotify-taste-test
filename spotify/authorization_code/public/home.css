@@ -2,15 +2,18 @@
     /* border: 1px solid black; */
     font-family: proxima-nova,sans-serif;
     font-style: normal;
+    background-color: #a1c3d3;
 }
 
 #survey-div {
-    width: 60%;
+    width: 55%;
     margin: auto;
+    background-color: transparent;
 }
 .answers-div {
     display: grid;
     grid-template-columns: 1fr 1fr;
+    background-color: transparent;
 }
 .answers-div h5 img{
     width: 100%;
@@ -20,35 +23,58 @@
     -webkit-user-drag: none;
     -webkit-user-select: none;
     -ms-user-select: none;
+    background-color: transparent;
+    border-radius: 20px;
+    margin-top: 10px;
+
 }
 .answers-div h5 {
-    width: 90%;
-    margin: auto;
+    /* width: 90%; */
     text-align: center;
+    margin: 10px 10px;
+    padding: 10px;
 }
 h3 {
     text-align: center;
     font-size: 36px;
     margin: 10px 0px;
     font-weight: 700;
+    background-color: transparent;
 
 }
 h5 {
     font-size: 28px;
     font-weight: 400;
-    background-color: gray;
+    background-color:#caf27a;
     padding: 10px;
+    border-radius: 20px;
 }
 .question-outer-div {
     margin: 0px 0px 60px 0px;
     padding: 20px;
     background-color: #1DB954;
+    border-radius: 20px;
 }
 h1 {
     text-align: center;
-    font-size: 40px;
+    font-size: 48px;
+    font-weight: 800;
 }
 .selected {
     /* border: 5px solid red !important; */
-    background-color: blueviolet;
+    background-color: #fb7ea8;
+}
+
+#match-me-button{
+    position: absolute;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    font-size: 48px;
+    font-weight: 800;
+    margin: auto;
+    padding: 10px;
+    background-color: #caf27a;
+    /* border: 5px solid #1DB954; */
+    border: transparent;
+    border-radius: 20px;
 }

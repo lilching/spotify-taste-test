@@ -35,9 +35,6 @@ $("#login-form").submit((event)=>{
         }
     }).then(function(response) {
         return response.json();
-        
-        //WE ARE HEREEEE
-        //instead of sending file with sendFile, send json with success and if sucesss go to the url that we send in sendjson
     })
     .then(function(data) {
         if(data.success) {

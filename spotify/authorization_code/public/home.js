@@ -44,22 +44,22 @@ let questions = [
         answers: [
             {
                 name: "Baby by Justin Bieber",
-                image: "baby.jpg",
+                image: "assets/baby.jpg",
                 genre: "pop"
             },
             {
                 name: "Babysitter by Dababy",
-                image: "baby-sitter.jpg",
+                image: "assets/baby-sitter.jpg",
                 genre: "hiphop"
             },
             {
                 name: "Babydoll by Dominic Fike",
-                image: "babydoll.jpg",
+                image: "assets/babydoll.jpg",
                 genre: "rock"
             },
             {
                 name: "Baby its Cold Outside by Frank Sinatra",
-                image: "baby-its-cold-outside.jpg",
+                image: "assets/baby-its-cold-outside.jpg",
                 genre: "jazz"
             }
         ]
@@ -69,12 +69,12 @@ let questions = [
         answers: [
             {
                 name: "Old Taylor",
-                image: "old-taylor.jpg",
+                image: "assets/old-taylor-swift.png",
                 genre: "country"
             },
             {
                 name: "New Taylor",
-                image: "new-taylor.jpg",
+                image: "assets/new-taylor-swift.jpg",
                 genre: "pop"
             }
         ]
@@ -84,22 +84,22 @@ let questions = [
         answers: [
             {
                 name: "Californiacation by The Red Hot Chilli Peppers",
-                image: "californiacation.jpg",
+                image: "assets/californiacation.jpg",
                 genre: "rock"
             },
             {
                 name: "Sweet Home Alabama by Lynyrd Skynyrd",
-                image: "sweet-home-alabama.jpg",
+                image: "assets/sweet-home-alabama.jpg",
                 genre: "country"
             },
             {
                 name: "Empire State of Mind by Alecia Keys",
-                image: "empire-state-of-mind.png",
+                image: "assets/empire-state-of-mind.png",
                 genre: "randb"
             },
             {
                 name: "Paris by the Chainsmokers",
-                image: "paris.png",
+                image: "assets/paris.png",
                 genre: "electronic"
             }
         ]
@@ -110,22 +110,22 @@ let questions = [
         answers: [
             {
                 name: "Should I Stay or Should I Go by the Clash",
-                image: "should-i-stay-or-should-i-go.jpg",
+                image: "assets/should-i-stay-or-should-i-go.jpg",
                 genre: "rock"
             },
             {
                 name: "Stay by Rihanna",
-                image: "stay.png",
+                image: "assets/stay.png",
                 genre: "randb"
             },
             {
                 name: "Stay by Zedd & Alessia Cara",
-                image: "stay-zedd.jpg",
+                image: "assets/stay-zedd.jpg",
                 genre: "electronic"
             },
             {
                 name: "Lets Stay Together by Al Green",
-                image: "lets-stay-together.jpg",
+                image: "assets/lets-stay-together.jpg",
                 genre: "jazz"
             }
         ]
@@ -136,22 +136,22 @@ let questions = [
         answers: [
             {
                 name: "I love jazz!",
-                image: "i-love-jazz.jpg",
+                image: "assets/i-love-jazz.jpg",
                 genre: "jazz"
             },
             {
                 name: "I hate jazz.",
-                image: "i-hate-jazz.jpg",
+                image: "assets/i-hate-jazz.jpg",
                 genre: "electronic"
             },
             {
                 name: "I love the Bee Movie",
-                image: "bee-movie-png",
+                image: "assets/bee-movie.png",
                 genre: "pop"
             },
             {
-                name: "Oh that's from that movie my kids made me watch",
-                image: "ya-like-jazz.png",
+                name: "Why is this one of the options",
+                image: "assets/ya-like-jazz.png",
                 genre: "classical"
             }
         ]
@@ -162,22 +162,22 @@ let questions = [
         answers: [
             {
                 name: "American Idiot by Greenday",
-                image: "american-idiot.jpg",
+                image: "assets/american-idiot.png",
                 genre: "rock"
             },
             {
                 name: "This is America by Childish Gambino",
-                image: "this-is-america.jpg",
+                image: "assets/this-is-america.jpg",
                 genre: "hiphop"
             },
             {
                 name: "Party in the USA Miley Cyrus?",
-                image: "party-in-the-usa.jpg",
+                image: "assets/party-in-the-usa.jpg",
                 genre: "pop"
             },
             {
                 name: "American Boy Estelle",
-                image: "american-boy.jpg",
+                image: "assets/american-boy.jpg",
                 genre: "randb"
             }
         ]
@@ -187,22 +187,22 @@ let questions = [
         answers: [
             {
                 name: "Body by Loud Luxury",
-                image: "body.png",
+                image: "assets/body.png",
                 genre: "electronic"
             },
             {
                 name: "Touch my Body by Maria Carey",
-                image: "touch-my-body.jpg",
+                image: "assets/touch-my-body.jpg",
                 genre: "randb"
             },
             {
                 name: "Talking Body by Tove Lo",
-                image: "talking-body.jpg",
+                image: "assets/talking-body.webp",
                 genre: "pop"
             },
             {
                 name: "Somebody to Love by Queen",
-                image: "somebody-to-love.jpg",
+                image: "assets/somebody-to-love.jpg",
                 genre: "rock"
             }
         ]  
@@ -212,22 +212,22 @@ let questions = [
         answers: [
             {
                 name: "Cowboy Boots",
-                image: "cowboy.boots.jpg",
+                image: "assets/cowboy-boots.jpg",
                 genre: "country"
             },
             {
                 name: "Rave Kandi Bracelet",
-                image: "rave-kandi-bracelet.jpg",
+                image: "assets/rave-kandi-bracelet.jpg",
                 genre: "electronic"
             },
             {
                 name: "Healing Crystals",
-                image: "healing-crystals.jpg",
+                image: "assets/healing-crystals.jpg",
                 genre: "randb"
             },
             {
                 name: "Fedora",
-                image: "fedora.jpg",
+                image: "assets/fedora.jpg",
                 genre: "jazz"
             }
         ] 
@@ -237,12 +237,12 @@ let questions = [
         answers: [
             {
                 name: "Music Festival",
-                image: "festival.jpg",
+                image: "assets/festival.jpg",
                 genre: "pop"
             },
             {
                 name: "Underground Bar",
-                image: "underground-bar.jpg",
+                image: "assets/underground-bar.jpg",
                 genre: "rock"
             },
             {
@@ -252,22 +252,22 @@ let questions = [
             },
             {
                 name: "Coffee Shop",
-                image: "coffee-stop.jpg",
+                image: "assets/coffee-shop.jpg",
                 genre: "jazz"
             },
             {
                 name: "Symphony Hall",
-                image: "symphony-hall.jpg",
+                image: "assets/symphony-hall.jpg",
                 genre: "classical"
             },
             {
                 name: "Rave",
-                image: "rave.jpg",
+                image: "assets/rave.jpg",
                 genre: "electronic"
             },
             {
                 name: "Driving with the Windows Down",
-                image: "car-radio.jpg",
+                image: "assets/car-radio.jpg",
                 genre: "hiphop"
             },
             {
@@ -281,6 +281,7 @@ let questions = [
 
 
 answers = []
+// $("body").append($("<button id='match-me-button'>Match Me!</button>"))
 for(let i = 0; i < questions.length; ++i) {
     survey_div = $("#survey-div")
     let to_append = $("<div class='question-outer-div'></div>")
@@ -329,6 +330,32 @@ $("#match-me-button").click((event)=>{
         scoresDict[questions[i].answers[answers[i]].genre] += 1;
     }
     console.log(scoresDict)
+    
+    data = {
+        username: "",
+        scoresDict: scoresDict
+    }
+    fetch("/log-survey", {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then(function(response) {
+        return response.json();    
+    })
+    .then(function(data) {
+        if(data.success) {
+            window.location.href = data.link;
+        }
+        else {
+            alert(data.message)
+        }
+        console.log(data)
+    })
+    .catch(function(error) {
+        console.error('Error', error)
+    })  
 })
 
 //when a thing is clicked, then change answers[i] --> #
