@@ -32,13 +32,123 @@ var {MongoClient} = require('mongodb');
 const uri = "mongodb+srv://mod7root:mod7pass@mod7cluster.ygyyw.mongodb.net/mod7database?retryWrites=true&w=majority"
 const client = new MongoClient(uri, { useUnifiedTopology: true });
 
-
-
-
-
 var username = ""
 
+function findGenre(genre) {
+  let out = genreDict[genre.replace(" ", "").replace("-","").replace("&", "").replace("+", "")]
+  return out;
+}
+var genreDict = {
+  pop: 'pop',
+  dancepop: 'pop',
+  postteenpop: 'pop',
+  electropop: 'pop',
+  popdance: 'pop',
+  viralpop: 'pop',
+  indiecafepop: 'pop',
+  indiepop: 'pop',
+  ukpop: 'pop',
+  latin: 'pop',
+  latinpop: 'pop',
+  kpop: 'pop',
+  regionalmexican: 'pop',
+  canadianpop: 'pop',
+  newwavepop: 'pop',
+  europop: 'pop',
 
+  poprap: 'hiphop',
+  rap: 'hiphop',
+  hiphop: 'hiphop',
+  gangsterrap: 'hiphop',
+  southernhiphop: 'hiphop',
+  hardcorehiphop: 'hiphop',
+  eastcoasthiphop: 'hiphop',
+  trap: 'hiphop',
+  traplatino: 'hiphop',
+  dirtysouthrap: 'hiphop',
+  melodicrap: 'hiphop',
+  undergroundhiphop: 'hiphop',
+  atlhiphop: 'hiphop',
+  emorap: 'hiphop',
+  chicagorap: 'hiphop',
+  
+  rock: 'rock',
+  albumrock: 'rock',
+  permanentwave: 'rock',
+  classicrock: 'rock',
+  hardrock: 'rock',
+  modernrock: 'rock',
+  heartlandrock: 'rock',
+  mellowgold: 'rock',
+  alternativerock: 'rock',
+  softrock: 'rock',
+  poprock: 'rock',
+  artrock: 'rock',
+  alternativemetal: 'rock',
+  neometal: 'rock',
+  folkrock: 'rock',
+  danceerock: 'rock',
+
+  edm: 'electronic',
+  electrohouse: 'electronic',
+  bigroom: 'electronic',
+  popedm: 'electronic',
+  tropicalhouse: 'electronic',
+  progressiveelectrohouse: 'electronic',
+  electronictrap: 'electronic',
+  deepbigroom: 'electronic',
+  brostep: 'electronic',
+  progressivehouse: 'electronic',
+  house: 'electronic',
+  electropop: 'electronic',
+
+  country: 'country',
+  countryroad: 'country',
+  contemporarycountry: 'country',
+  moderncountryrock: 'country',
+  countryrock: 'country',
+  countrypop: 'country',
+  outlawcountry: 'country',
+  yachtrock: 'country',
+  motown: 'country',
+
+  classical: 'classical',
+  compositionalambient: 'classical',
+  backgroundmusic: 'classical',
+  soundtrack: 'classical',
+  hollywood: 'classical',
+  scorecore: 'classical',
+  calminginstrumental: 'classical',
+  videogamemusic: 'classical',
+
+  vocaljazz: 'jazz',
+  lounge: 'jazz',
+  adultstandards: 'jazz',
+  jazzpop: 'jazz',
+  easylistening: 'jazz',
+  bolero: 'jazz',
+  showtunes: 'jazz',
+  chanson: 'jazz',
+  folk: 'jazz',
+  singersongwriter: 'jazz',
+
+
+  rb: 'randb',
+  urbancontemporary: 'randb',
+  newjackswing: 'randb',
+  neosoul: 'randb',
+  hippop: 'randb',
+  poprb: 'randb',
+  quietstorm: 'randb',
+  funk: 'randb',
+  girlgroup: 'randb',
+  alternativerb: 'randb',
+  soul: 'randb',
+  britishsoul: 'randb',
+  reggaeton: 'randb',
+  tropical: 'randb'
+
+}
 
 //var express = require('express'); // Express web server framework
 var request = require('request'); // "Request" library
@@ -149,17 +259,46 @@ app.get('/callback', function(req, res) {
         //   // console.log(body.display_name)
         // });
         
-        var options_top = {
-          url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=10&offset=0', //?time_range=short_term&limit=10&offset=0
-          headers: {'Authorization': 'Bearer ' + access_token,  }, //'Accept': 'application/json', 'Content-Type': 'application/json',
-          json: true,
-          // body: {limit:10, time_range: "short_term"}
+        var options_artists = {
+          url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=50&offset=0', 
+          headers: {'Authorization': 'Bearer ' + access_token,  },
+          json: true
         } 
-
-        request.get(options_top, function(error, response, body) {
-          // console.log("top songs and artists log")
-          // console.log(body)
-          // console.log(body.items[5].genres)
+        // var options_tracks = {
+        //   url: 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=10&offset=0', 
+        //   headers: {'Authorization': 'Bearer ' + access_token,  }, 
+        //   json: true
+        // }
+        // request.get(options_tracks, function(error, response, body) {
+        //   // console.log(body)
+        //   console.log(body.items[1].album)
+        // })
+        request.get(options_artists, function(error, response, body) {
+          var artistsDict = {
+            "pop": 0,
+            "rock": 0,
+            "hiphop": 0,
+            "electronic": 0,
+            "country": 0,
+            "classical": 0,
+            "jazz": 0,
+            "randb": 0
+          }
+          for(let i = 0; i < 50; i++) {
+            for(let j = 0; j < body.items[i].genres.length; j++){
+              let genre = findGenre(body.items[i].genres[j])
+              if(genre) {
+                artistsDict[genre]++;
+              }
+            }
+          }
+          console.log(artistsDict)
+          if(logArtists(artistsDict)) {
+            console.log("logged top artists genres for user " + username)
+          }
+          else {
+            console.log("error when logging top artists genres for user " + username)
+          }
 
         })
         
@@ -234,19 +373,24 @@ async function registerUser(userData){
   }
 }
 async function loginUser(userData){
-  // await client.connect();
   const res2 = await client.db("mod7database").collection("users").findOne({username: userData.username})
-  // console.log("checking if username exists:")
-  // console.log(res2)
-  if(res2.username == userData.username) {
-    if(passwordHash.verify(userData.password, res2.hashedPassword)) {
-      //console.log("here where we log the mofo in")
-      return true;
+  if(res2) {
+    if(res2.username == userData.username) {
+      if(passwordHash.verify(userData.password, res2.hashedPassword)) {
+        return true;
+      }
+      else {
+        return false;
+      }
     }
+    else {
+      return false;
+    }    
   }
   else {
     return false;
-  }    
+  }
+  
 }
 app.post("/register-user", (req, res)=> {
   let userData = {username: req.body.username, password: req.body.password}
@@ -302,6 +446,21 @@ async function logSurvey(data) {
     { username: data.username }, 
     { 
       $set: {surveyDict: data.scoresDict}
+    }
+  ) 
+  // console.log(updateResult)
+  if(updateResult.result.nModified > 0) {
+    return true;
+  }
+  else {
+    return false
+  }
+}
+async function logArtists(data) {
+  const updateResult = await client.db("mod7database").collection("users").updateOne(
+    { username: username }, 
+    { 
+      $set: {artistsDict: data}
     }
   ) 
   // console.log(updateResult)
