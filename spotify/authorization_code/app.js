@@ -9,6 +9,7 @@
 //from Github at https://github.com/nodejs/node/issues/33741
 import { verify } from 'crypto';
 import { createRequire } from 'module';
+import { normalize } from 'path';
 const require = createRequire(import.meta.url);
 
 var express = require('express');
@@ -264,15 +265,7 @@ app.get('/callback', function(req, res) {
           headers: {'Authorization': 'Bearer ' + access_token,  },
           json: true
         } 
-        // var options_tracks = {
-        //   url: 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=10&offset=0', 
-        //   headers: {'Authorization': 'Bearer ' + access_token,  }, 
-        //   json: true
-        // }
-        // request.get(options_tracks, function(error, response, body) {
-        //   // console.log(body)
-        //   console.log(body.items[1].album)
-        // })
+   
         request.get(options_artists, function(error, response, body) {
           var artistsDict = {
             "pop": 0,
@@ -289,8 +282,10 @@ app.get('/callback', function(req, res) {
               let genre = findGenre(body.items[i].genres[j])
               if(genre) {
                 artistsDict[genre]++;
+                
               }
             }
+
           }
           console.log(artistsDict)
           if(logArtists(artistsDict)) {
@@ -342,8 +337,6 @@ app.get('/refresh_token', function(req, res) {
     }
   });
 });
-
-
 
 
 app.get('/', (request, response)=> {
@@ -442,6 +435,7 @@ app.post("/log-survey", (req, res)=> {
   })
 })
 async function logSurvey(data) {
+  normalizeDict(data.scoresDict)
   const updateResult = await client.db("mod7database").collection("users").updateOne(
     { username: data.username }, 
     { 
@@ -457,6 +451,7 @@ async function logSurvey(data) {
   }
 }
 async function logArtists(data) {
+  normalizeDict(data)
   const updateResult = await client.db("mod7database").collection("users").updateOne(
     { username: username }, 
     { 
@@ -471,5 +466,18 @@ async function logArtists(data) {
     return false
   }
 }
-
+function normalizeDict(dictionary) {
+  let normMax = 10;
+  let decimals = 2;
+  let max = 0;
+  Object.values(dictionary).forEach(function(val) {
+    if(val > max) {
+      max = val;
+    }
+  })  
+  Object.keys(dictionary).forEach(function(key) {
+    var newVal = Math.round(dictionary[key]*normMax*Math.pow(10, decimals)/max)/Math.pow(10, decimals);
+    dictionary[key] = newVal;
+  })
+}
 init();

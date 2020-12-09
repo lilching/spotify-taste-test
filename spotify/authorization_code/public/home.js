@@ -237,9 +237,14 @@ let questions = [
         q: "Pick a vibey space.",
         answers: [
             {
-                name: "Music Festival",
-                image: "assets/festival.jpg",
+                name: "Coachella",
+                image: "assets/coachella.jpg",
                 genre: "pop"
+            },
+            {
+                name: "Rolling Loud",
+                image: "assets/rollingloud.jpg",
+                genre: "hiphop"
             },
             {
                 name: "Underground Bar",
@@ -248,7 +253,7 @@ let questions = [
             },
             {
                 name: "County Fair",
-                image: "",
+                image: "assets/countyfair.jpg",
                 genre: "country"
             },
             {
@@ -267,13 +272,8 @@ let questions = [
                 genre: "electronic"
             },
             {
-                name: "Driving with the Windows Down",
-                image: "assets/car-radio.jpg",
-                genre: "hiphop"
-            },
-            {
                 name: "Bedroom",
-                image: "",
+                image: "assets/bedroom.jpg",
                 genre: "randb"
             }
         ]
