@@ -19,6 +19,8 @@ var path = require('path');
 var passwordHash = require('password-hash');
 var http = require("http");
 var app = express();
+// myStorage = window.sessionStorage;
+
 
 
 // const app = express();
@@ -515,6 +517,40 @@ async function matchUser() {
   client.db("mod7database").collection("users").find({}).toArray().then((data)=>{
     console.log("got data for all users")
     console.log(data)
+    let loggedUser;
+    data.forEach(function(val){
+      if(val.username == username) {
+        loggedUser = val
+        console.log("logged user: ")
+        console.log(loggedUser)
+      }
+    })
+    let matchesUsernames = []
+    data.forEach(function(val){
+      let matchScore = 0;
+      if(val.username != username){
+        console.log("compared to:")
+        console.log(val)
+        if(val.topThreeGenres) {
+          for (let i = 0; i < 3; i++){
+            for(let j = 0; j < 3; j++) {
+              if(loggedUser.topThreeGenres[i][0] == val.topThreeGenres[j][0]) {
+                matchScore += loggedUser.topThreeGenres[i][1] + val.topThreeGenres[j][1];
+                break;
+              }
+            }
+          }
+        }
+        
+        console.log(username + " & " + val.username + " matchScore: " +  matchScore)
+        if(matchScore >= 15) {
+          //check top artists or songs --> FUTURE
+          matchesUsernames.push(val.username)
+        }
+      }  
+    })
+    console.log("matches: ")
+    console.log(matchesUsernames)
   })
 }
 async function logArtists(data) {
