@@ -249,16 +249,16 @@ app.get('/callback', function(req, res) {
         var access_token = body.access_token,
         refresh_token = body.refresh_token;
         
-        // var options = {
-        //   url: 'https://api.spotify.com/v1/me',
-        //   headers: { 'Authorization': 'Bearer ' + access_token },
-        //   json: true
-        // };
-        // // use the access token to access the Spotify Web API
-        // request.get(options, function(error, response, body) {
-        //   // console.log(body);
-        //   // console.log(body.display_name)
-        // });
+        var options = {
+          url: 'https://api.spotify.com/v1/me',
+          headers: { 'Authorization': 'Bearer ' + access_token },
+          json: true
+        };
+        request.get(options, function(error, response, body) {
+          if(body.images[0].url){
+            insertProfilePictureLink(body.images[0].url)
+          }
+        });
         
         var options_artists = {
           url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=50&offset=0', 
@@ -287,7 +287,7 @@ app.get('/callback', function(req, res) {
             }
 
           }
-          console.log(artistsDict)
+          //console.log(artistsDict)
           if(logArtists(artistsDict)) {
             console.log("logged top artists genres for user " + username)
           }
@@ -422,18 +422,27 @@ app.get("/get-username", (req, res)=> {
   }
 })
 app.post("/log-survey", (req, res)=> {
-  console.log(req.body)
+  // console.log(req.body)
   logSurvey(req.body).then((value)=> {
     if(value) {
-      console.log("sucessfully inserted survey data for user " + username)
+      
       res.json({success: true, message: "Successfully inserted survey data", link: "http://localhost:8888/"})
     }
     else {
-      console.log("failed to insert survey data for user " + username) 
       res.json({success: false, message: "Failed to insert survey data"})
     }
   })
+  calculateGenreScores().then((result)=>{
+    if(result) {
+      matchUser();
+    }  
+  })
 })
+
+//data of conversations, each with a unique id, 
+  //list of messages, with content, user that sent it, timestamp
+//ever user has a list of id's their attached to
+
 async function logSurvey(data) {
   normalizeDict(data.scoresDict)
   const updateResult = await client.db("mod7database").collection("users").updateOne(
@@ -443,12 +452,70 @@ async function logSurvey(data) {
     }
   ) 
   // console.log(updateResult)
-  if(updateResult.result.nModified > 0) {
+  if(updateResult.matchedCount == 1) {
+    if(updateResult.result.nModified > 0) {
+      console.log("sucessfully inserted/updated survey data for user " + username)
+    }
+    else {
+      console.log("no survey data update required for user " + username)
+    }
     return true;
   }
   else {
-    return false
+    console.log("failed to insert survey data for user " + username) 
+    return false;
   }
+  
+}
+async function calculateGenreScores() {
+  const userData = await client.db("mod7database").collection("users").findOne({username: username})
+  if(userData) {
+    let scoresDict = {}
+    Object.keys(userData.surveyDict).forEach(function(key) {
+      scoresDict[key] = userData.surveyDict[key] + 2*userData.artistsDict[key]
+    })
+    normalizeDict(scoresDict)
+
+    //from https://stackoverflow.com/questions/25500316/sort-a-dictionary-by-value-in-javascript
+    // Create items array
+    let topThreeGenres = Object.keys(scoresDict).map(function(key) {
+      return [key, scoresDict[key]];
+    }).sort(function(first, second) {
+      return second[1] - first[1];
+    }).slice(0, 3)
+    //end of code edited from stackoverflow
+
+    const pushScoresReturn = await client.db("mod7database").collection("users").updateOne(
+      {username: username},
+      {$set: {scoresDict: scoresDict, topThreeGenres: topThreeGenres}}
+    )
+    if(pushScoresReturn.matchedCount == 1) {
+      if(pushScoresReturn.result.nModified > 0) {
+        console.log("successfully calculated genre scores for user " + username + " and pushed/updated into database")
+      }
+      else{
+        console.log("no genre score updated required for user " + username )
+      }
+      return true;
+    }
+    else if(pushScoresReturn.matchedCount > 1) {
+      console.log("Problem! Multiple users with same username!!!! (" + username + ")")
+    }
+    else {
+      console.log("failed to push genre scores for user " + username + " into database")
+      return false;
+    }
+  }
+  else {
+    console.log("could not find user data for user " + username + " when trying to cacluate user genre scores")
+    return false;
+  }
+}
+async function matchUser() {
+  client.db("mod7database").collection("users").find({}).toArray().then((data)=>{
+    console.log("got data for all users")
+    console.log(data)
+  })
 }
 async function logArtists(data) {
   normalizeDict(data)
@@ -457,14 +524,35 @@ async function logArtists(data) {
     { 
       $set: {artistsDict: data}
     }
-  ) 
-  // console.log(updateResult)
+  )  
   if(updateResult.result.nModified > 0) {
     return true;
   }
   else {
     return false
   }
+}
+
+async function insertProfilePictureLink(link) {
+  const updateResult = await client.db("mod7database").collection("users").updateOne(
+    { username: username }, 
+    { 
+      $set: {profilePicture: link}
+    }
+  )
+  if(updateResult.matchedCount == 1) {
+    if(updateResult.result.nModified > 0) {
+      console.log("sucessfully inserted/updated profile picture link for user " + username)
+    }
+    else {
+      console.log("no profile picture link update required for user " + username)
+    }
+    return true;
+  }
+  else {
+    console.log("failed to insert/update profile picture link for user " + username) 
+    return false;
+  } 
 }
 function normalizeDict(dictionary) {
   let normMax = 10;
